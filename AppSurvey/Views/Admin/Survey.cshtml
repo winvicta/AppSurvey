@@ -1,0 +1,58 @@
+﻿@model AppSurvey.Models.SurveyViewModels.ResponseViewModel
+
+<div class="bg-primary panel-body"><h4>User Accounts</h4></div>
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+<hr />
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>總結  問題與回答:</strong>
+    </dd>
+</dl>
+
+@for (int i = 0; i < Model.QAs.Count; i++)
+{
+    <dl class="dl-horizontal" style="font-size:large">
+        <dt>
+            問題:
+        </dt>
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].qText)</strong>
+        </dd>
+        <dt>
+            回答:
+        </dt>
+        @for (int j = 0; j < Model.QAs[i].aCates.Count; j++)
+        {
+            <dd>
+                <strong>@Html.DisplayFor(model => model.QAs[i].aCates[j])</strong>
+            </dd>
+        }
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].aText)</strong>
+        </dd>
+    </dl>
+}
+
+<dl class="dl-horizontal" style="font-size:small">
+    <dt>
+    </dt>
+    <dd>
+        <p>問卷填寫時間: @Model.Date</p>
+        <p>By: @Model.Email</p>
+    </dd>
+</dl>
+
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>檢閱代碼</strong>
+    </dd>
+    <dd>
+        <form name="Form1" asp-controller="Admin" asp-action="Report" method="post">
+            @Html.HiddenFor(m => m.Email)
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </dd>
+</dl>

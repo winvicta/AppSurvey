@@ -1,0 +1,101 @@
+﻿@model AppSurvey.Models.SurveyViewModels.QuestionViewModel
+@{
+    ViewData["Title"] = "問題";
+    Model.Text = null;
+    bool bText = false;
+}
+
+<div class="bg-primary panel-body"><h4>問卷調查</h4></div>
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+<form name="Form" asp-controller="Survey" asp-action="Index" method="post">
+    <div class="form-group">
+        <hr />
+        <dl class="dl-horizontal" style="font-size:large">
+            <dt>
+                問題:
+            </dt>
+            <dd>
+                <strong>@Html.DisplayFor(model => model.Question.Description)</strong>
+            </dd>
+        </dl>
+        <dl class="dl-horizontal" style="font-size:large">
+            @if (Model.id == 19 | Model.id == 24)
+            {
+                @for (int i = 0; i < Model.Options.Count; i++)
+                {
+                    <dd>
+                        <strong>@Html.CheckBoxFor(m => m.Options[i].Selected, new { id = i })</strong>
+                        <strong>@Html.HiddenFor(m => m.Options[i].Code)</strong>
+                        <strong>@Html.DisplayFor(m => m.Options[i].Category)</strong>
+                    </dd>
+                    @if (Model.Options[i].Rank > 50 && Model.Options[i].Rank < 100)
+                    {
+                        bText = true;
+                    }
+                }
+            }
+            else
+            {
+                @for (int i = 0; i < Model.Options.Count; i++)
+                {
+                    <dd>
+                        @Html.RadioButtonFor(m => m.Code, Model.Options[i].Code, new { id = Model.Options[i].Code })
+                        <label for=@Model.Options[i].Code>@Model.Options[i].Category</label>
+                    </dd>
+                    @if (Model.Options[i].Rank > 50 && Model.Options[i].Rank < 100)
+                    {
+                        bText = true;
+                    }
+                }
+
+            }
+        </dl>
+        <input type="hidden" name="qText" value="@Model.Question.Description" />
+        <br />
+        <div class="row panel">
+            <div id="categories" class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+                <div class="form-group">
+                    @if (bText)
+                    {
+                        <label for="Text">請填寫答案:</label>
+                        @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @rows = 3, @cols = 50 });
+                    }
+                </div>
+            </div>
+        </div>
+        <dl class="dl-horizontal">
+            <dd>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </dd>
+        </dl>
+    </div>
+
+
+    
+</form>
+
+
+@*@for (int i = 0; i < Model.Options.Count; i++)
+            {
+    <dd>
+        @if (Model.id == 19 | Model.id == 24)
+        {
+            @Html.CheckBoxFor(m => m.Options[i].Selected, new { id = i })
+            @Html.HiddenFor(m => m.Options[i].Code)
+            @Html.DisplayFor(m => m.Options[i].Description)
+        }
+        else
+        {
+            @Html.RadioButtonFor(m => m.Code, Model.Options[i].Code, new { id = Model.Options[i].Code })
+            <label for=@Model.Options[i].Code>@Model.Options[i].Category</label>
+        }
+    </dd>
+                @if (Model.Options[i].Rank > 50 && Model.Options[i].Rank < 100)
+                {
+                    bText = true;
+                }
+}*@

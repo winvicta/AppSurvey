@@ -1,0 +1,47 @@
+﻿@model AppSurvey.Models.SurveyViewModels.ResponseViewModel
+
+<div class="bg-primary panel-body"><h4>User Accounts</h4></div>
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+<hr />
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>本頁僅列印原始題號與選項代碼,供後續製作參考.</strong>
+    </dd>
+</dl>
+
+@for (int i = 0; i < Model.QAs.Count; i++)
+{
+    <dl class="dl-horizontal" style="font-size:large">
+        <dt>
+            問題:
+        </dt>
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].qText)</strong>
+        </dd>
+        <dt>
+            回答:
+        </dt>
+        @for (int j = 0; j < Model.QAs[i].aCates.Count; j++)
+        {
+            <dd>
+                <strong>@Html.DisplayFor(model => model.QAs[i].aCates[j])</strong>
+            </dd>
+        }
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].aText)</strong>
+        </dd>
+    </dl>
+}
+
+<dl class="dl-horizontal" style="font-size:medium">
+    <dt>
+    </dt>
+    <dd>
+        <p>問卷填寫時間: @Model.Date</p>
+        <p>By: @Model.Email</p>
+    </dd>
+</dl>
+
+

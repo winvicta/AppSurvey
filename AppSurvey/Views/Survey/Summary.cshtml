@@ -1,0 +1,71 @@
+﻿@model AppSurvey.Models.SurveyViewModels.ResponseViewModel
+
+<div class="bg-primary panel-body"><h4>問卷調查</h4></div>
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+<hr />
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>總結  以下是您回答的問題與回答:</strong>
+    </dd>
+</dl>
+
+@for (int i = 0; i < Model.QAs.Count; i++)
+{
+    <dl class="dl-horizontal" style="font-size:large">
+        <dt>
+            問題:
+        </dt>
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].qText)</strong>
+        </dd>
+        <dt>
+            您的回答:
+        </dt>
+        @for (int j = 0; j < Model.QAs[i].aCates.Count; j++)
+        {
+            <dd>
+                <strong>@Html.DisplayFor(model => model.QAs[i].aCates[j])</strong>
+            </dd>
+        }
+        <dd>
+            <strong>@Html.DisplayFor(model => model.QAs[i].aText)</strong>
+        </dd>
+    </dl>
+}
+
+<dl class="dl-horizontal" style="font-size:small">
+    <dt>
+    </dt>
+    <dd>
+        <p>問卷填寫時間: @Model.Date</p>
+    </dd>
+</dl>
+
+
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>謝謝回答. 請上傳.</strong>
+    </dd>
+    <dd>
+        <form name="Form1" asp-controller="Survey" asp-action="Update">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </dd>
+</dl>
+<hr />
+
+<dl class="dl-horizontal" style="font-size:large">
+    <dt></dt>
+    <dd>
+        <strong>重新回答問卷</strong>
+    </dd>
+    <dd>
+        <form name="Form2" asp-controller="Survey" asp-action="Startover" asp-route-id="1">
+            <button type="submit" class="btn btn-danger">Start Over</button>
+        </form>
+    </dd>
+</dl>
+
